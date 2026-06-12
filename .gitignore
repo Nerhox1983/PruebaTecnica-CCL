@@ -1,0 +1,17 @@
+# === .NET / Visual Studio ===
+bin/
+obj/
+*.user
+*.suo
+.vs/
+
+# === Angular / Node ===
+node_modules/
+.angular/
+dist/
+tmp/
+.env
+
+# === Sistema Operativo ===
+Thumbs.db
+.DS_Store
