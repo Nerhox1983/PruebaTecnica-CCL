@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './features/login/login.component';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -8,10 +9,7 @@ export const routes: Routes = [
   },
   {
     path: 'inventario',
-    loadComponent: () => import('./features/inventario-lista/inventario-lista.component').then(m => m.InventarioListaComponent)
-  },
-  {
-    path: 'movimiento',
+    canActivate: [authGuard],
     loadComponent: () => import('./features/inventario-form/inventario-form.component').then(m => m.InventarioFormComponent)
   },
   {

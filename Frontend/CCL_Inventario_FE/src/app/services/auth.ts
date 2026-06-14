@@ -7,9 +7,7 @@ import { Observable, tap } from 'rxjs';
 })
 export class AuthService {
   private http = inject(HttpClient);
-  // Revisa que este puerto coincida con el que corre tu API de .NET
-  private readonly apiUrl = 'https://localhost:7117/api/auth'; 
-
+  private readonly apiUrl = 'https://localhost:7225/auth';
   currentUserToken = signal<string | null>(localStorage.getItem('token'));
 
   login(credentials: any): Observable<any> {

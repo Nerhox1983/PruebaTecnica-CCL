@@ -148,7 +148,6 @@ export class LoginComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
 
-  // Estados usando Signals
   isLoading = signal<boolean>(false);
   errorMessage = signal<string | null>(null);
 

@@ -15,6 +15,22 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// ==========================================
+// === INICIO CORS: Configurar el servicio ===
+// ==========================================
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AngularAppPolicy", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200") // El puerto nativo de tu Front-end
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+// ==========================================
+// === FIN CORS: Configurar el servicio ===
+// ==========================================
+
 var connectionString = builder.Configuration.GetConnectionString("PostgresConnection");
 builder.Services.AddDbContext<InventarioDbContext>(options =>
     options.UseNpgsql(connectionString, b => b.MigrationsAssembly("CCL_Inventario.Infrastructure")));
@@ -56,6 +72,15 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+// ==========================================
+// === INICIO CORS: Habilitar Middleware ===
+// ==========================================
+// IMPORTANTE: Debe ir estrictamente ANTES de UseAuthentication y UseAuthorization
+app.UseCors("AngularAppPolicy");
+// ==========================================
+// === FIN CORS: Habilitar Middleware ===
+// ==========================================
+
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -64,6 +89,6 @@ app.MapControllers();
 app.Run();
 
 [ExcludeFromCodeCoverage]
-public partial class Program 
+public partial class Program
 {
 }

@@ -1,0 +1,105 @@
+<div class="dashboard-container">
+  <header class="navbar">
+    <h1>📦 Control de Stock e Inventario</h1>
+    <button class="btn-logout" (click)="onLogout()">Cerrar Sesión</button>
+  </header>
+
+  @if (mensajeExito) {
+    <div class="alert alert-success">
+      {{ mensajeExito }}
+    </div>
+  }
+  @if (mensajeError) {
+    <div class="alert alert-danger">
+      {{ mensajeError }}
+    </div>
+  }
+
+  <div class="table-responsive">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre del Producto</th>
+          <th>Cantidad Actual</th>
+          <th>Estado Alerta</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (producto of productos(); track producto.id) {
+          <tr>
+            <td><strong>#{{ producto.id }}</strong></td>
+            <td>{{ producto.nombre }}</td>            
+            <td>{{ producto.cantidad }} unidades</td>
+            <td>
+              @if (producto.cantidad <= 5) {
+                <span class="badge-low">Stock Crítico</span>
+              } @else {
+                <span class="badge-ok">Óptimo</span>
+              }
+            </td>
+            <td>
+              <button class="btn-action" (click)="abrirModalMovimiento(producto)">
+                Registrar Movimiento
+              </button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="6" style="text-align: center; padding: 2rem; color: #64748b;">
+              No se encontraron productos en el inventario.
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  @if (mostrarModal) {
+    <div class="modal-backdrop">
+      <div class="modal-card">
+        <h3>🔄 Registrar Movimiento de Inventario</h3>
+        
+        <p class="modal-target">
+          <strong>Producto:</strong> {{ productoSeleccionado?.nombre }}
+        </p>
+        <p class="modal-stock">
+          <strong>Stock disponible:</strong> {{ productoSeleccionado?.cantidad }} unidades
+        </p>
+
+        <form (ngSubmit)="guardarMovimiento()">
+          <div class="form-group">
+            <label for="tipoMovimiento">Tipo de Movimiento</label>
+            <select id="tipoMovimiento" name="tipoMovimiento" [(ngModel)]="tipoMovimiento">
+              <option value="ENTRADA">📥 Entrada (Abastecer Stock)</option>
+              <option value="EGRESO">📤 Egreso (Retirar / Vender)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="cantidad">Cantidad de Unidades</label>
+            <input 
+              type="number" 
+              id="cantidad" 
+              name="cantidad" 
+              min="1" 
+              [(ngModel)]="cantidadMovimiento" 
+              required
+              placeholder="Ej: 10"
+            />
+          </div>
+
+          <div class="modal-actions">
+            <button type="button" class="btn-cancel" (click)="cerrarModal()">
+              Cancelar
+            </button>
+            <button type="submit" class="btn-save" [disabled]="cantidadMovimiento <= 0">
+              Procesar Cambios
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+</div>
