@@ -1,5 +1,8 @@
-﻿namespace CCL_Inventario.Core.DTOs
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace CCL_Inventario.Core.DTOs
 {
+    [ExcludeFromCodeCoverage]
     public class AuthResponseDto
     {
         public string Token { get; set; } = string.Empty;

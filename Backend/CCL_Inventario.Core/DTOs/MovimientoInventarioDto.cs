@@ -1,5 +1,8 @@
-﻿namespace CCL_Inventario.Core.Dtos
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace CCL_Inventario.Core.Dtos
 {
+    [ExcludeFromCodeCoverage]
     public class MovimientoInventarioDto
     {
         public int Id { get; set; }

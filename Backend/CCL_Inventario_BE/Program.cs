@@ -1,4 +1,5 @@
-﻿using CCL_Inventario.Core.Interfaces;
+﻿using System.Diagnostics.CodeAnalysis; // Asegúrate de incluir este using arriba
+using CCL_Inventario.Core.Interfaces;
 using CCL_Inventario.Core.Repositories;
 using CCL_Inventario.Core.Services;
 using CCL_Inventario.Infrastructure.Data;
@@ -41,7 +42,7 @@ builder.Services.AddAuthentication(options =>
         ValidIssuer = jwtSettings["Issuer"],
         ValidAudience = jwtSettings["Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(key),
-        ClockSkew = TimeSpan.Zero // Elimina el retraso por defecto de 5 minutos
+        ClockSkew = TimeSpan.Zero
     };
 });
 
@@ -55,10 +56,14 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// ORDEN CRÍTICO: Authentication siempre debe ir antes de Authorization
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
 
 app.Run();
+
+[ExcludeFromCodeCoverage]
+public partial class Program 
+{
+}
