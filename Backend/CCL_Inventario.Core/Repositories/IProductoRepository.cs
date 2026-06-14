@@ -6,5 +6,5 @@ public interface IProductoRepository
 {
     Task<IEnumerable<Producto>> ObtenerInventarioAsync();
     Task<Producto?> ObtenerPorIdAsync(int id);
-    Task ActualizarCantidadAsync(Producto producto);
+    Task ActualizarCantidadAsync(Producto producto);    
 }

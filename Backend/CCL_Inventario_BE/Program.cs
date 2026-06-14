@@ -20,6 +20,7 @@ builder.Services.AddDbContext<InventarioDbContext>(options =>
 
 builder.Services.AddScoped<IProductoRepository, ProductoRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IProductoService, ProductoService>();
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 var key = Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]!);
