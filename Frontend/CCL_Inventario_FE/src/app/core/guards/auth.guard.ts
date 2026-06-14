@@ -1,0 +1,16 @@
+import { inject } from '@angular/core';
+import { CanActivateFn, Router } from '@angular/router';
+import { AuthService } from '../../services/auth'; // Sube tres niveles de forma exacta hasta /services/auth
+
+export const authGuard: CanActivateFn = (route, state) => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
+
+  if (authService.isAuthenticated()) {
+    return true;
+  }
+
+  // Si no hay token guardado, rebota al login de inmediato
+  router.navigate(['/login']);
+  return false;
+};

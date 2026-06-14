@@ -17,6 +17,11 @@
           "builder": "@angular/build:application",
           "options": {
             "browser": "src/main.ts",
+            "polyfills": [
+            "zone.js"
+            ],
+            "optimization": true,
+            "extractLicenses": true,
             "tsConfig": "tsconfig.app.json",
             "assets": [
               {
