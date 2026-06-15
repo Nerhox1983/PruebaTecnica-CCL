@@ -8,7 +8,7 @@ namespace CCL_Inventario.Api.Controllers;
 /// Controlador para la gestión y consulta de productos en el inventario.
 /// </summary>
 [ApiController]
-[Route("api/[controller]")]
+[Route("productos")]
 public class ProductosController(IProductoService productoService) : ControllerBase
 {
     /// <summary>
@@ -16,7 +16,7 @@ public class ProductosController(IProductoService productoService) : ControllerB
     /// </summary>
     /// <returns>Una lista de objetos de tipo Producto.</returns>
     /// <response code="200">Retorna el listado de productos.</response>
-    [HttpGet]
+    [HttpGet("inventario")]
     public async Task<IActionResult> GetInventario()
     {
         var productos = await productoService.ObtenerInventarioAsync();

@@ -9,8 +9,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   if (authService.isAuthenticated()) {
     return true;
   }
-
-  // Si no hay token guardado, rebota al login de inmediato
+  
   router.navigate(['/login']);
   return false;
 };

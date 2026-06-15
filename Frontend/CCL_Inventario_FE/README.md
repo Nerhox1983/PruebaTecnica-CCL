@@ -1,59 +1,69 @@
-# CCLInventarioFE
+# Control de Inventario - Prueba Técnica CCL
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.0.1.
+Este proyecto es una solución integral para la gestión de inventarios, compuesta por una API robusta en .NET y una interfaz de usuario moderna en Angular.
 
-## Development server
+## Requisitos Previos
 
-To start a local development server, run:
+Antes de comenzar, asegúrese de tener instalado:
+- [.NET 9.0 SDK](https://dotnet.microsoft.com/download)
+- [Node.js](https://nodejs.org/) (versión LTS recomendada)
+- [Angular 19 CLI](https://angular.dev/tools/cli)
+
+## Instrucciones de Ejecución Local
+
+> [!IMPORTANT]
+> **Orden de ejecución:** Es fundamental iniciar primero el **Backend** y verificar que esté corriendo antes de lanzar el **Frontend**. Esto asegura que el servicio de autenticación y los endpoints de productos estén disponibles cuando la aplicación Angular intente conectarse.
+
+### 1. Configuración del Backend (.NET)
+
+Navegue al directorio del servidor y ejecute la aplicación:
 
 ```bash
+cd Backend/CCL_Inventario_BE
+dotnet restore
+dotnet run
+```
+La API estará disponible para recibir peticiones (generalmente en `http://localhost:5000` o similar).
+
+### 2. Configuración del Frontend (Angular)
+
+En una nueva terminal, navegue al directorio del cliente e instale las dependencias necesarias:
+
+```bash
+cd Frontend/CCL_Inventario_FE
+npm install
 ng serve
 ```
+Una vez finalizada la compilación, abra su navegador en `http://localhost:4200/`.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Ejecución de Pruebas Unitarias
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
+### Backend (xUnit)
+Para validar la lógica de negocio y los controladores del servidor:
 ```bash
-ng generate component component-name
+cd Backend/CCL_Inventario.Tests
+dotnet test
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
+### Frontend (Vitest)
+Para ejecutar las pruebas de los componentes y servicios de Angular:
 ```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
+cd Frontend/CCL_Inventario_FE
 ng test
 ```
 
-## Running end-to-end tests
+## Credenciales de Acceso
+Para probar el inicio de sesión, puede utilizar las siguientes credenciales preconfiguradas:
+- **Usuario:** `admin`
+- **Contraseña:** `admin123`
 
-For end-to-end (e2e) testing, run:
+### Autenticación JWT y Seguridad
+Se ha implementado un esquema de seguridad basado en **JWT (JSON Web Token)** para proteger los endpoints de la API. 
 
-```bash
-ng e2e
-```
+**Razón de la implementación:**
+Siguiendo los requerimientos de la prueba, la autenticación se realiza mediante **credenciales fijas en memoria**. El uso de JWT en este escenario permite:
+1.  **Simular un entorno real:** Aunque las credenciales no provengan de una base de datos de usuarios, el flujo de obtención y validación del token es idéntico al de una aplicación productiva.
+2.  **Desacoplamiento:** El frontend gestiona el estado de la sesión mediante el token, permitiendo que la API sea stateless.
+3.  **Protección de Endpoints:** Garantiza que solo las peticiones con un token válido (firmado por el servidor) puedan registrar movimientos o consultar el inventario.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Este enfoque demuestra la capacidad de asegurar una arquitectura moderna entre .NET 9 y Angular 19.

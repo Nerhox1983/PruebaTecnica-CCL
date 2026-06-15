@@ -20,10 +20,10 @@ interface MovimientoPayload {
 export class ProductoService {
   private http = inject(HttpClient);
 
-  private readonly apiUrl = 'https://localhost:7225/api/Productos';
+  private readonly apiUrl = 'https://localhost:7225/productos';
 
   getInventario(): Observable<ProductoItem[]> {
-    return this.http.get<ProductoItem[]>(this.apiUrl);
+    return this.http.get<ProductoItem[]>(`${this.apiUrl}/inventario`);
   }
 
   registrarMovimiento(payload: MovimientoPayload): Observable<any> {
